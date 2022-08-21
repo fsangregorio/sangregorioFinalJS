@@ -7,6 +7,19 @@ fetch("../js/stock.json")
     renderizarTienda(datos);
 })
 
+let hacerTotal = () => {
+  let iconoCarrito = document.getElementById("carritoCantidad");
+  iconoCarrito.innerHTML = canasta.map((x) => x.item).reduce((x, y) => x + y, 0);
+};
+
+hacerTotal();
+
+let actualizar = (id) => {
+  let busqueda = canasta.find((x) => x.id === id);
+  document.getElementById(id).innerHTML = busqueda.item;
+  hacerTotal();
+};
+
 let aumentarCantidad = (id) => {
     let productoElegido = id;
     let busqueda = canasta.find((x) => x.id === productoElegido.id);
@@ -39,18 +52,6 @@ let reducirCantidad = (id) => {
     localStorage.setItem("data", JSON.stringify(canasta));
 };
   
-let actualizar = (id) => {
-    let busqueda = canasta.find((x) => x.id === id);
-    document.getElementById(id).innerHTML = busqueda.item;
-    hacerTotal();
-};
-  
-  
-let hacerTotal = () => {
-    let iconoCarrito = document.getElementById("carritoCantidad");
-    iconoCarrito.innerHTML = canasta.map((x) => x.item).reduce((x, y) => x + y, 0);
-};
-
 let renderizarTienda = (productos) => {
   return (tienda.innerHTML = productos
     .map((x) => {
@@ -77,10 +78,5 @@ let renderizarTienda = (productos) => {
     `
     ;
     } )
-    .join(""));
-  
+    .join(""));  
 };
-
-renderizarTienda();
-
-hacerTotal();
